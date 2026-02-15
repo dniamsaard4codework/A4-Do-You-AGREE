@@ -1,0 +1,55 @@
+[project]
+name = "a4-do-you-agree"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "datasets>=4.5.0",
+    "flask>=3.1.2",
+    "gensim>=4.4.0",
+    "ipykernel>=7.2.0",
+    "matplotlib>=3.10.7",
+    "nltk>=3.9.2",
+    "numpy>=2.3.4",
+    "pandas>=2.3.3",
+    "pip>=26.0.1",
+    "scikit-learn>=1.7.2",
+    "scipy>=1.16.2",
+    "torch>=2.9.0",
+    "torchaudio>=2.9.0",
+    "torchvision>=0.24.0",
+    "tqdm>=4.67.3",
+    "transformers>=5.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = []
+exclude = ["notebook*", "example_input*", "datasets*", "models*", "tests*", "__pycache__*"]
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu130", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+torchvision = [
+  { index = "pytorch-cu130", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true

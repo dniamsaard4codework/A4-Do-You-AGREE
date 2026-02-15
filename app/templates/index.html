@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLI — Sentence-BERT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+
+        <header>
+            <h1>Natural Language Inference</h1>
+            <p>Sentence-BERT &middot; Dechathon Niamsa-ard [st126235]</p>
+        </header>
+
+        <div class="card">
+            <form id="nli-form">
+                <div class="field">
+                    <label for="premise">Premise</label>
+                    <textarea id="premise" name="premise"
+                        placeholder="Enter the premise sentence...">A man is playing a guitar on stage.</textarea>
+                </div>
+
+                <div class="field">
+                    <label for="hypothesis">Hypothesis</label>
+                    <textarea id="hypothesis" name="hypothesis"
+                        placeholder="Enter the hypothesis sentence...">The man is performing music.</textarea>
+                </div>
+
+                <button type="submit" class="btn" id="submit-btn">Predict</button>
+            </form>
+
+            <div class="spinner" id="spinner">Analyzing&hellip;</div>
+
+            <div class="result" id="result">
+                <div class="result-header">
+                    <span class="label-text">Prediction</span>
+                    <span class="result-tag" id="result-tag"></span>
+                </div>
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-value" id="confidence"></div>
+                        <div class="metric-label">Confidence</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value" id="similarity"></div>
+                        <div class="metric-label">Cosine Similarity</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            Assignment 4: Do you AGREE? &middot; NLU 2026 &middot; AIT
+        </footer>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
