@@ -27,6 +27,9 @@ This project implements **BERT** (Bidirectional Encoder Representations from Tra
 ├── assets/                           # Saved visualizations & diagrams
 │   ├── SBERT.png                    # Sentence-BERT architecture diagram
 │   ├── pipeline.png                 # Prediction pipeline diagram
+│   ├── bert_pretraining_loss.png    # BERT pre-training loss curves
+│   ├── sbert_finetuning_loss.png    # S-BERT fine-tuning loss/accuracy curves
+│   ├── confusion_matrix.png         # NLI test set confusion matrix
 │   └── app-demo.gif                 # Web app demonstration
 ├── lab_04/                           # Lab reference notebooks
 │   ├── BERT.ipynb
@@ -123,6 +126,14 @@ The model follows the original BERT architecture with two pre-training objective
 | Masking Strategy | 15% tokens: 80% [MASK], 10% random, 10% unchanged |
 | Max Masked Tokens | 5 per sequence |
 
+### Pre-training Loss Curves
+
+The plot below shows the total loss (MLM + NSP), MLM loss, and NSP loss over the 100 pre-training epochs.
+
+![BERT Pre-training Loss](assets/bert_pretraining_loss.png)
+
+> **Total BERT Pre-training Time**: 28m 12.93s
+
 ---
 
 ## Task 2: Sentence Embedding with Sentence-BERT (3 points)
@@ -180,13 +191,21 @@ $$o = \text{softmax}\left(W^T \cdot (u, v, |u - v|)\right)$$
 
 ### Training Progress
 
-| Epoch | Avg Loss | Train Accuracy |
-|:---:|:---:|:---:|
-| 1 | 1.0245 | 45.83% |
-| 2 | 0.8890 | 58.38% |
-| 3 | 0.8265 | 62.61% |
-| 4 | 0.7795 | 65.59% |
-| 5 | 0.7336 | 68.20% |
+| Epoch | Train Loss | Train Accuracy | Val Loss | Val Accuracy |
+|:---:|:---:|:---:|:---:|:---:|
+| 1 | 1.0330 | 45.12% | 0.9452 | 54.16% |
+| 2 | 0.8925 | 58.09% | 0.8663 | 60.04% |
+| 3 | 0.8284 | 62.35% | 0.8490 | 61.64% |
+| 4 | 0.7822 | 65.26% | 0.8375 | 62.33% |
+| 5 | 0.7383 | 67.92% | 0.8420 | 62.63% |
+
+### Fine-tuning Loss & Accuracy Curves
+
+The plot below shows train vs. validation loss and accuracy over the 5 fine-tuning epochs.
+
+![S-BERT Fine-tuning Loss](assets/sbert_finetuning_loss.png)
+
+> **Total S-BERT Fine-tuning Time**: 30m 30.06s
 
 ---
 
@@ -199,19 +218,23 @@ $$o = \text{softmax}\left(W^T \cdot (u, v, |u - v|)\right)$$
 | | precision | recall | f1-score | support |
 |---|:---:|:---:|:---:|:---:|
 | **entailment** | 0.63 | 0.70 | 0.66 | 3,368 |
-| **neutral** | 0.62 | 0.59 | 0.61 | 3,219 |
-| **contradiction** | 0.63 | 0.59 | 0.61 | 3,237 |
-| **accuracy** | | | **0.63** | 9,824 |
-| **macro avg** | 0.63 | 0.63 | 0.63 | 9,824 |
-| **weighted avg** | 0.63 | 0.63 | 0.63 | 9,824 |
+| **neutral** | 0.62 | 0.60 | 0.61 | 3,219 |
+| **contradiction** | 0.62 | 0.57 | 0.60 | 3,237 |
+| **accuracy** | | | **0.62** | 9,824 |
+| **macro avg** | 0.62 | 0.62 | 0.62 | 9,824 |
+| **weighted avg** | 0.62 | 0.62 | 0.62 | 9,824 |
 
-> **Overall Test Accuracy**: 62.87%
+> **Overall Test Accuracy**: 62.41%
+
+### Confusion Matrix
+
+![Confusion Matrix](assets/confusion_matrix.png)
 
 ### Analysis
 
 - **Entailment** has the highest recall (0.70), meaning the model is best at identifying when a hypothesis logically follows from the premise.
-- **Neutral** and **contradiction** have lower recall (~0.59), indicating these are harder relationships to distinguish.
-- The balanced precision across all classes (~0.63) shows the model does not strongly favor any single class.
+- **Neutral** and **contradiction** have lower recall (0.60 and 0.57 respectively), indicating these are harder relationships to distinguish.
+- The balanced precision across all classes (~0.62–0.63) shows the model does not strongly favor any single class.
 
 ### Limitations & Potential Improvements
 
